@@ -1,13 +1,25 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import styles from './styles';
-import {Input, Text, useTheme, Image, Button} from 'react-native-elements';
+import {
+  Input,
+  Icon,
+  Text,
+  useTheme,
+  Image,
+  Button,
+} from 'react-native-elements';
+import Firebase from '../../Firebase/firebaseConfig';
 import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import 'firebase/compat/database';
+
+import {SignUpUser} from '../../Firebase/SignUp';
+import {AddUser} from '../../Firebase/Users';
 import {emailValidation} from '../../Utils/validation';
 
-import {LoginUser} from '../../Firebase/LoginUser';
-
-const Login = ({navigation}) => {
+const SignUp = ({navigation}) => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState({
@@ -30,13 +42,6 @@ const Login = ({navigation}) => {
     }
   };
 
-  const onEmailChange = text => {
-    setEmail(text);
-    if (error.email === 'Email is not valid') {
-      emailValidate();
-    }
-  };
-
   const passwordValidate = () => {
     if (password.length < 6) {
       setError({
@@ -51,6 +56,13 @@ const Login = ({navigation}) => {
     }
   };
 
+  const onEmailChange = text => {
+    setEmail(text);
+    if (error.email === 'Email is not valid') {
+      emailValidate();
+    }
+  };
+
   const onPasswordChange = text => {
     setPassword(text);
     if (error.password === 'Password must be at least 6 characters') {
@@ -58,14 +70,20 @@ const Login = ({navigation}) => {
     }
   };
 
-  const onLogin = () => {
-    if (email && password) {
-      LoginUser(password, email)
+  const onSignup = () => {
+    if (username && email && password) {
+      SignUpUser(password, email)
         .then(res => {
-          if (res.user) {
+          const currentUser = Firebase.auth().currentUser;
+          if (currentUser) {
+            AddUser(username, email, '', currentUser.uid)
+              .then(() => {
+                console.warn('User added');
+              })
+              .catch(err => {
+                console.warn(err);
+              });
             navigation.navigate('Home');
-          } else {
-            alert(res.toString().split(':')[2].trim());
           }
         })
         .catch(err => {
@@ -89,7 +107,7 @@ const Login = ({navigation}) => {
             {color: theme?.colors?.primary},
             {fontWeight: '700', fontSize: 18},
           ]}>
-          Email
+          Username
         </Text>
         <Input
           leftIcon={{
@@ -98,10 +116,28 @@ const Login = ({navigation}) => {
             color: '#333',
             size: 18,
           }}
-          placeholder="Enter email"
+          placeholder="Enter username"
+          value={username}
+          onChangeText={v => setUsername(v)}
+        />
+        <Text
+          style={[
+            {color: theme?.colors?.primary},
+            {fontWeight: '700', fontSize: 18},
+          ]}>
+          Email
+        </Text>
+        <Input
+          leftIcon={{
+            type: 'font-awesome',
+            name: 'envelope',
+            color: '#333',
+            size: 15,
+          }}
+          placeholder="Enter Email"
           value={email}
           onChangeText={v => onEmailChange(v)}
-          onBlur={() => emailValidate()}
+          onBlur={() => emailValidate(email)}
           errorMessage={error.email}
         />
         <Text
@@ -121,13 +157,13 @@ const Login = ({navigation}) => {
           placeholder="Enter Password"
           value={password}
           onChangeText={v => onPasswordChange(v)}
-          secureTextEntry={true}
-          onBlur={() => passwordValidate()}
+          onBlur={() => passwordValidate(password)}
           errorMessage={error.password}
+          secureTextEntry={true}
         />
         <Button
-          title="Login"
-          onPress={() => onLogin()}
+          title="Sign Up"
+          onPress={() => onSignup()}
           buttonStyle={{
             backgroundColor: 'rgba(78, 116, 289, 1)',
             borderRadius: 50,
@@ -139,9 +175,9 @@ const Login = ({navigation}) => {
             alignSelf: 'center',
           }}
         />
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={[{color: theme?.colors?.primary}, styles.toSignUp]}>
-            Don't have account? Create now!
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={[{color: theme?.colors?.primary}, styles.toLogin]}>
+            Already have an account? Login now!
           </Text>
         </TouchableOpacity>
       </View>
@@ -149,4 +185,4 @@ const Login = ({navigation}) => {
   );
 };
 
-export default Login;
+export default SignUp;

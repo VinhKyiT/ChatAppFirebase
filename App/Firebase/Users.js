@@ -1,5 +1,12 @@
 import Firebase from './firebaseConfig';
 
-export const AddUser = (name, email, password) => {
-  Firebase.database().ref('users').push(user);
+export const AddUser = async (name, email, image, uuid) => {
+  return await Firebase.database()
+    .ref('users/' + uuid)
+    .set({
+      uuid,
+      name,
+      email,
+      image,
+    });
 };

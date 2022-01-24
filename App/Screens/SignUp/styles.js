@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     paddingHorizontal: 20,
   },
-  toSignUp: {
+  toLogin: {
     fontWeight: '700',
     fontSize: 16,
     alignSelf: 'center',
