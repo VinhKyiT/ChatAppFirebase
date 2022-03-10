@@ -10,3 +10,11 @@ export const AddUser = async (name, email, image, uuid) => {
       image,
     });
 };
+
+export const UpdateUserImage = async (image, uuid) => {
+  return await Firebase.database()
+    .ref('users/' + uuid)
+    .update({
+      image,
+    });
+};

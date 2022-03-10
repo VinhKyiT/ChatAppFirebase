@@ -13,6 +13,7 @@ import Firebase from '../../Firebase/firebaseConfig';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {SignUpUser} from '../../Firebase/SignUp';
 import {AddUser} from '../../Firebase/Users';
@@ -77,11 +78,11 @@ const SignUp = ({navigation}) => {
           const currentUser = Firebase.auth().currentUser;
           if (currentUser) {
             AddUser(username, email, '', currentUser.uid)
-              .then(() => {
-                console.warn('User added');
+              .then(async () => {
+                await AsyncStorage.setItem('uid', currentUser.uid);
               })
               .catch(err => {
-                console.warn(err);
+                console.log(err);
               });
             navigation.navigate('Home');
           }

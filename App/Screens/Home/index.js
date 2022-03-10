@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import ChatList from '../ChatList';
 import styles from './styles';
-import UserList from './../UserList/index';
+import UserList from '../UserList';
 import {Icon} from 'react-native-elements';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -15,6 +15,16 @@ const Home = () => {
         headerShown: false,
       }}>
       <Tab.Screen
+        name="User"
+        component={UserList}
+        options={{
+          tabBarLabel: 'People',
+          tabBarIcon: ({color, size}) => (
+            <Icon color={color} name="users" size={size} type="font-awesome" />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Chat"
         component={ChatList}
         options={{
@@ -26,16 +36,6 @@ const Home = () => {
               size={size}
               type="font-awesome"
             />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="User"
-        component={UserList}
-        options={{
-          tabBarLabel: 'People',
-          tabBarIcon: ({color, size}) => (
-            <Icon color={color} name="users" size={size} type="font-awesome" />
           ),
         }}
       />

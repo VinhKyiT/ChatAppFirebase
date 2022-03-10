@@ -15,6 +15,11 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'flex-start',
     width: '100%',
+    borderBottomWidth: 2,
+    borderBottomColor: '#eaeaea',
+    '&:last-child': {
+      borderBottomWidth: 0,
+    },
   },
   textWrapper: {
     marginLeft: 10,

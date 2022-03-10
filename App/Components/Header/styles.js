@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   leftAvatar: {
+    flex: 1,
     justifyContent: 'center',
   },
 });
