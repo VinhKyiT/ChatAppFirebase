@@ -119,6 +119,12 @@ const ChatList = ({navigation}) => {
                     setIsLoading(false);
                   }
                 });
+            } else {
+              setUser({
+                name: childSnapshot.val().name,
+                uuid: childSnapshot.val().uuid,
+                image: childSnapshot.val().image,
+              });
             }
           });
         });
