@@ -15,16 +15,6 @@ const Home = () => {
         headerShown: false,
       }}>
       <Tab.Screen
-        name="User"
-        component={UserList}
-        options={{
-          tabBarLabel: 'People',
-          tabBarIcon: ({color, size}) => (
-            <Icon color={color} name="users" size={size} type="font-awesome" />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Chat"
         component={ChatList}
         options={{
@@ -36,6 +26,16 @@ const Home = () => {
               size={size}
               type="font-awesome"
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="User"
+        component={UserList}
+        options={{
+          tabBarLabel: 'People',
+          tabBarIcon: ({color, size}) => (
+            <Icon color={color} name="users" size={size} type="font-awesome" />
           ),
         }}
       />

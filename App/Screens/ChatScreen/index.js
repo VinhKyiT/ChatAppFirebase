@@ -82,16 +82,6 @@ const ChatScreen = ({navigation, route}) => {
     const [timeToggle, setTimeToggle] = useState(false);
     return (
       <View>
-        {/* <Animated.View>
-          <Text
-            style={{
-              alignSelf: 'center',
-              marginVertical: 5,
-              opacity: timeToggle ? 1 : 0,
-            }}>
-            {item.timestamp}
-          </Text>
-        </Animated.View> */}
         <View
           style={{
             maxWidth: Dimensions.get('window').width / 2 + 10,
@@ -101,7 +91,7 @@ const ChatScreen = ({navigation, route}) => {
           <TouchableOpacity onPress={() => setTimeToggle(!timeToggle)}>
             <View
               style={{
-                backgroundColor: '#fff',
+                backgroundColor: currentUid === item.sender ? '#ddd' : '#333',
                 borderRadius: 20,
               }}>
               {item.image ? (
@@ -117,7 +107,7 @@ const ChatScreen = ({navigation, route}) => {
               ) : (
                 <Text
                   style={{
-                    color: '#000',
+                    color: currentUid === item.sender ? '#000' : '#fff',
                     padding: 10,
                     fontSize: 16,
                   }}>
@@ -131,7 +121,7 @@ const ChatScreen = ({navigation, route}) => {
     );
   };
 
-  const getCurrentUid = async () => {
+  const getMessages = async () => {
     try {
       const uid = await AsyncStorage.getItem('uid');
       setCurrentUid(uid);
@@ -161,7 +151,7 @@ const ChatScreen = ({navigation, route}) => {
   };
 
   useEffect(() => {
-    getCurrentUid();
+    getMessages();
   }, []);
 
   return (
