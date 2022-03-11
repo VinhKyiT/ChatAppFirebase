@@ -1,4 +1,9 @@
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Avatar, Text, SearchBar} from 'react-native-elements';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -149,8 +154,8 @@ const ChatList = ({navigation}) => {
         inputStyle={{color: '#000'}}
       />
       {isLoading ? (
-        <View>
-          <Text>Loading...</Text>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <ActivityIndicator size="large" />
         </View>
       ) : (
         <FlatList

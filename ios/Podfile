@@ -12,13 +12,10 @@ target 'ChatAppFirebase' do
     :hermes_enabled => false
   )
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
-  pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
+  # pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
 
-  pod 'react-native-image-base64', :path => '../node_modules/react-native-image-base64'
 
   target 'ChatAppFirebaseTests' do
     inherit! :complete

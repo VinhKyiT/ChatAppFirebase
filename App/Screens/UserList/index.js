@@ -1,4 +1,9 @@
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Avatar, Text, SearchBar, Icon} from 'react-native-elements';
 import Header from '../../Components/Header';
@@ -107,7 +112,9 @@ const UserList = ({navigation}) => {
           keyExtractor={item => item.uuid}
         />
       ) : (
-        <Text>Loading...</Text>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <ActivityIndicator size="large" />
+        </View>
       )}
     </SafeAreaProvider>
   );
